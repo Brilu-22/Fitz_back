@@ -4,5 +4,5 @@ python-dotenv
 requests
 firebase-admin
 google-generativeai
-spotify
+spotipy
 pydantic # FastAPI uses Pydantic for data validation

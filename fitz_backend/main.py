@@ -9,13 +9,13 @@ from firebase_admin import credentials, auth, firestore
 
 import requests # For Edamam API
 import google.generativeai as genai # For Google Gemini
-import spotify # For Spotify Web API
-from spotify.oauth2 import SpotifyClientCredentials # For client credentials flow
+import spotipy # For Spotify Web API
+from spotipy.oauth2 import SpotifyClientCredentials # For client credentials flow
 
 
 # --- 0. Load Environment Variables ---
 # This must be called before accessing any os.getenv() calls
-load_dotenv()
+load_dotenv("fitz_backend/fitz.env")
 
 # --- 1. FastAPI App Initialization ---
 app = FastAPI(
@@ -79,7 +79,7 @@ else:
             client_id=SPOTIPY_CLIENT_ID,
             client_secret=SPOTIPY_CLIENT_SECRET
         )
-        spotify = spotify.Spotify(auth_manager=auth_manager)
+        spotify = spotipy.Spotify(auth_manager=auth_manager)
         print("Spotify client initialized successfully.")
     except Exception as e:
         print(f"ERROR: Failed to initialize Spotify: {e}. Check SPOTIPY_CLIENT_ID and SPOTIPY_CLIENT_SECRET in .env")
@@ -216,7 +216,7 @@ async def generate_plan(request_data: GeneratePlanRequest):
                         "tracks_count": playlist['tracks']['total']
                     })
 
-            except spotify.exceptions.SpotifyException as se:
+            except spotipy.exceptions.SpotifyException as se:
                 print(f"Spotify API error during search: {se}")
                 playlist_suggestions.append({"error": f"Spotify API error: {se}. Check credentials or network."})
             except Exception as se:
