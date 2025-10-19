@@ -1,0 +1,8 @@
+fastapi
+uvicorn[standard]
+python-dotenv
+requests
+firebase-admin
+google-generativeai
+spotify
+pydantic # FastAPI uses Pydantic for data validation
