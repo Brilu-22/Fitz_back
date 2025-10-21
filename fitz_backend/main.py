@@ -1,23 +1,21 @@
 import os
-from dotenv import load_dotenv
-from fastapi import FastAPI, HTTPException, status
-from pydantic import BaseModel, Field
+from dotenv import load_dotenv 
+from fastapi import FastAPI, HTTPException, status 
+from pydantic import BaseModel, Field 
 from typing import List, Optional, Dict, Any
 
-import firebase_admin
-from firebase_admin import credentials, auth, firestore
+import firebase_admin 
+from firebase_admin import credentials, auth, firestore 
+import requests 
+import google.generativeai as genai 
+import spotipy 
+from spotipy.oauth2 import SpotifyClientCredentials 
 
-import requests # For Edamam API
-import google.generativeai as genai # For Google Gemini
-import spotipy # For Spotify Web API
-from spotipy.oauth2 import SpotifyClientCredentials # For client credentials flow
-
-
-# --- 0. Load Environment Variables ---
+# 1.1. Load Environment Variables 
 # This must be called before accessing any os.getenv() calls
 load_dotenv("fitz_backend/fitz.env")
 
-# --- 1. FastAPI App Initialization ---
+# 1. FastAPI App Initialization 
 app = FastAPI(
     title="AI Fitness Music App API",
     description="API for generating personalized workout plans, diet suggestions, and music playlists using AI.",
